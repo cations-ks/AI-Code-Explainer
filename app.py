@@ -16,7 +16,6 @@ if not api_key:
     st.error("Gemini API key is not configured.")
     st.stop()
 
-# Connect to Gemini
 client = genai.Client(api_key=api_key)
 
 
@@ -32,7 +31,7 @@ st.set_page_config(
 
 
 # =========================
-# CUSTOM AESTHETIC DESIGN
+# CUSTOM DESIGN
 # =========================
 
 st.markdown("""
@@ -132,11 +131,8 @@ html, body, [class*="css"] {
     );
 
     border: 1px solid rgba(139, 92, 246, 0.20);
-
     border-radius: 22px;
-
     padding: 1.3rem 1.6rem;
-
     margin-bottom: 1.8rem;
 
     box-shadow:
@@ -196,7 +192,9 @@ textarea {
     border: 1px solid rgba(139, 92, 246, 0.25) !important;
     border-radius: 16px !important;
     color: #e5e7eb !important;
-    box-shadow: 0 10px 35px rgba(0,0,0,0.18) !important;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,0.18) !important;
 }
 
 textarea:focus {
@@ -212,11 +210,16 @@ textarea:focus {
     border: 1px solid rgba(139,92,246,0.25);
     background: rgba(17,20,34,0.85);
     color: #c9cce0;
+
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
+
     padding: 0.72rem 1rem;
+
     transition: all 0.25s ease;
-    box-shadow: 0 7px 25px rgba(0,0,0,0.18);
+
+    box-shadow:
+        0 7px 25px rgba(0,0,0,0.18);
 }
 
 .stButton > button:hover {
@@ -228,8 +231,11 @@ textarea:focus {
 
     border-color: #8b5cf6;
     color: #ffffff;
+
     transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(100,80,200,0.20);
+
+    box-shadow:
+        0 12px 30px rgba(100,80,200,0.20);
 }
 
 pre {
@@ -273,10 +279,6 @@ hr {
 # =========================
 
 def generate_response(prompt):
-    """
-    Sends a prompt to Gemini.
-    Automatically retries temporary server errors.
-    """
 
     max_retries = 3
 
@@ -295,20 +297,18 @@ def generate_response(prompt):
 
             error_text = str(error)
 
-            # Retry temporary Gemini server problems
             if "503" in error_text or "UNAVAILABLE" in error_text:
 
                 if attempt < max_retries - 1:
 
                     wait_time = 3 * (2 ** attempt)
-
                     time.sleep(wait_time)
 
                 else:
 
                     return (
                         "### ✦ Gemini is temporarily busy\n\n"
-                        "Google's AI service is experiencing high demand "
+                        "The AI service is experiencing high demand "
                         "right now.\n\n"
                         "Please wait a little and try again."
                     )
@@ -425,7 +425,7 @@ language = st.selectbox(
 
 
 # =========================
-# CODE INPUT
+# CODE
 # =========================
 
 st.markdown(
@@ -464,7 +464,7 @@ col1, col2, col3 = st.columns(3)
 
 
 # =========================
-# EXPLAIN CODE
+# EXPLAIN
 # =========================
 
 with col1:
@@ -518,7 +518,7 @@ Explain the important functions and variables.
 
 
 # =========================
-# IMPROVE CODE
+# IMPROVE
 # =========================
 
 with col2:
@@ -567,7 +567,7 @@ Then explain the changes you made.
 
 
 # =========================
-# OPTIMIZE CODE
+# OPTIMIZE
 # =========================
 
 with col3:
