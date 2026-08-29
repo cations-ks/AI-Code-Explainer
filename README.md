@@ -1,164 +1,165 @@
-\# 🤖 AI Code Explainer
+# ✦ AI Code Explainer
 
+> A beginner-friendly AI-powered web application that helps programmers understand, improve, and optimize their code.
 
+## 🌐 Live Demo
 
-An AI-powered web application that helps beginners understand, improve, and optimize programming code.
+**AI Code Explainer:**
+*https://ai-code-explainer-ks.streamlit.app/*
 
+---
 
+## ✦ About the Project
 
-\## ✨ Features
+AI Code Explainer is a web application built using **Python, Streamlit, and Google Gemini**.
 
+It allows users to paste their code, select a programming language, and use AI to:
 
+* ⌁ Explain code step-by-step
+* ✦ Improve code readability
+* ⚡ Optimize code efficiency
 
-\* Explain code in beginner-friendly language
+The application is designed with a clean, modern interface to make learning programming easier for beginners.
 
-\* Step-by-step explanation of code
+---
 
-\* Time complexity analysis
+## ✦ Features
 
-\* Space complexity analysis
+### ⌁ Explain Code
 
-\* Identify important functions and variables
+Provides a simple explanation of what the code does, how it works, important variables and functions, and its time and space complexity.
 
-\* Improve code readability
+### ✦ Improve Code
 
-\* Optimize code efficiency
+Suggests a cleaner, more readable, and beginner-friendly version of the submitted code.
 
-\* Supports Python, C, C++, Java, and JavaScript
+### ⚡ Optimize Code
 
+Looks for ways to improve the efficiency of the code while keeping it understandable.
 
+### 🎨 Modern UI
 
-\## 🛠️ Technologies Used
+A dark, aesthetic interface with decorative patterns, gradients, and a responsive layout.
 
+---
 
+## ✦ Supported Languages
 
-\* Python
+* 🐍 Python
+* ⚙️ C
+* ⚡ C++
+* ☕ Java
+* 🌐 JavaScript
 
-\* Streamlit
+---
 
-\* Google Gemini API
+## 🛠 Tech Stack
 
-\* python-dotenv
+| Technology      | Purpose                         |
+| --------------- | ------------------------------- |
+| Python          | Application logic               |
+| Streamlit       | Web interface                   |
+| Google Gemini   | AI code analysis                |
+| python-dotenv   | Environment variable management |
+| Git & GitHub    | Version control                 |
+| Streamlit Cloud | Deployment                      |
 
+---
 
-
-\## 🚀 How to Run
-
-
-
-\### 1. Clone the repository
-
-
-
-```bash
-
-git clone YOUR\_GITHUB\_REPOSITORY\_LINK
-
-```
-
-
-
-\### 2. Open the project folder
-
-
-
-```bash
-
-cd AI-Code-Explainer
-
-```
-
-
-
-\### 3. Install the required packages
-
-
-
-```bash
-
-pip install -r requirements.txt
-
-```
-
-
-
-\### 4. Create the environment file
-
-
-
-Create a file named `.env` in the project folder and add:
-
-
+## ✦ How It Works
 
 ```text
-
-GEMINI\_API\_KEY=YOUR\_GEMINI\_API\_KEY
-
+User enters code
+       ↓
+Selects programming language
+       ↓
+Chooses an action
+       ↓
+AI processes the code
+       ↓
+Explanation / Improvement / Optimization
+       ↓
+Result displayed in the web app
 ```
 
+---
 
+## 🚀 Run Locally
 
-Replace `YOUR\_GEMINI\_API\_KEY` with your own Gemini API key.
-
-
-
-\### 5. Run the application
-
-
+### 1. Clone the repository
 
 ```bash
-
-python -m streamlit run app.py
-
+git clone https://github.com/cations-ks/AI-Code-Explainer.git
 ```
 
+### 2. Open the project
 
+```bash
+cd AI-Code-Explainer
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Add your Gemini API key
+
+Create a `.env` file:
+
+```text
+GEMINI_API_KEY=your_api_key_here
+```
+
+**Never upload your `.env` file to GitHub.**
+
+### 5. Run the application
+
+```bash
+python -m streamlit run app.py
+```
 
 The application will open in your browser.
 
+---
 
-
-\## 📁 Project Structure
-
-
+## 📁 Project Structure
 
 ```text
-
 AI-Code-Explainer/
-
 │
-
 ├── app.py
-
 ├── requirements.txt
-
 ├── README.md
-
 ├── .gitignore
-
 └── .env
-
 ```
 
+---
 
+## ✦ Future Improvements
 
-\## 🔐 Security
+Some possible future additions:
 
+* Support for more programming languages
+* Code error detection
+* Syntax highlighting
+* Downloadable explanations
+* Code history
+* Multiple AI model options
+* Dark/light themes
 
+---
 
-The API key is stored in a `.env` file and is excluded from GitHub using `.gitignore`.
+## 👩‍💻 Author
 
+**Krithi Sathish**
 
+B.Tech Computer Science — Big Data Analytics
 
-Never upload the `.env` file or your API key to a public repository.
+---
 
+## ⭐ If you find this project useful
 
-
-\## 🎯 Purpose
-
-
-
-This project was created as a Generative AI application to demonstrate how a Large Language Model can be used to assist beginners in understanding programming concepts and improving their code.
-
-
-
+Feel free to explore the project, try the live application, and star the repository!
