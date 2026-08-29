@@ -2,21 +2,34 @@ import streamlit as st
 from google import genai
 from dotenv import load_dotenv
 import os
+import time
 
-# Load API key
+# =========================
+# LOAD API KEY
+# =========================
+
 load_dotenv()
 
 api_key = os.getenv("GEMINI_API_KEY")
 
+if not api_key:
+    st.error("Gemini API key is not configured.")
+    st.stop()
+
 # Connect to Gemini
 client = genai.Client(api_key=api_key)
 
-# Page settings
+
+# =========================
+# PAGE SETTINGS
+# =========================
+
 st.set_page_config(
     page_title="AI Code Explainer",
     page_icon="✦",
     layout="wide"
 )
+
 
 # =========================
 # CUSTOM AESTHETIC DESIGN
@@ -31,7 +44,6 @@ html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
 }
 
-/* Main background */
 .stApp {
     background-color: #080a14;
 
@@ -71,14 +83,12 @@ html, body, [class*="css"] {
     background-attachment: fixed;
 }
 
-/* Main container */
 .block-container {
     max-width: 1150px;
     padding-top: 2.5rem;
     padding-bottom: 3rem;
 }
 
-/* Decorative top line */
 .top-decoration {
     text-align: center;
     color: #8b7cff;
@@ -87,7 +97,6 @@ html, body, [class*="css"] {
     margin-bottom: 0.8rem;
 }
 
-/* Main title */
 .hero-title {
     font-family: 'Space Grotesk', sans-serif;
     text-align: center;
@@ -107,7 +116,6 @@ html, body, [class*="css"] {
     letter-spacing: -1px;
 }
 
-/* Subtitle */
 .hero-subtitle {
     text-align: center;
     color: #858ba3;
@@ -116,7 +124,6 @@ html, body, [class*="css"] {
     margin-bottom: 2.2rem;
 }
 
-/* Welcome glass card */
 .welcome-card {
     background: linear-gradient(
         135deg,
@@ -149,7 +156,6 @@ html, body, [class*="css"] {
     margin-top: 0.3rem;
 }
 
-/* Section titles */
 .section-title {
     color: #c4b5fd;
     font-family: 'Space Grotesk', sans-serif;
@@ -159,216 +165,160 @@ html, body, [class*="css"] {
     margin-bottom: 0.5rem;
 }
 
-/* Sidebar */
 section[data-testid="stSidebar"] {
-
     background: rgba(8, 10, 20, 0.97);
-
-    border-right:
-        1px solid rgba(139, 92, 246, 0.18);
+    border-right: 1px solid rgba(139, 92, 246, 0.18);
 }
 
-/* Sidebar title */
 .sidebar-title {
-
     font-family: 'Space Grotesk', sans-serif;
-
     font-size: 1.35rem;
-
     font-weight: 700;
-
     color: #c4b5fd;
 }
 
-/* Sidebar headings */
 section[data-testid="stSidebar"] h3 {
-
     color: #a78bfa !important;
-
 }
 
-/* Sidebar text */
 section[data-testid="stSidebar"] p {
-
     color: #9298ad !important;
-
 }
 
-/* Select box */
 div[data-baseweb="select"] > div {
-
-    background:
-        rgba(17, 20, 34, 0.9);
-
-    border:
-        1px solid rgba(139, 92, 246, 0.25);
-
+    background: rgba(17, 20, 34, 0.9);
+    border: 1px solid rgba(139, 92, 246, 0.25);
     border-radius: 13px;
-
 }
 
-/* Text area */
 textarea {
-
-    background:
-        rgba(10, 13, 24, 0.95) !important;
-
-    border:
-        1px solid rgba(139, 92, 246, 0.25) !important;
-
-    border-radius:
-        16px !important;
-
-    color:
-        #e5e7eb !important;
-
-    box-shadow:
-        0 10px 35px rgba(0,0,0,0.18) !important;
-
+    background: rgba(10, 13, 24, 0.95) !important;
+    border: 1px solid rgba(139, 92, 246, 0.25) !important;
+    border-radius: 16px !important;
+    color: #e5e7eb !important;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.18) !important;
 }
 
-/* Text area focus */
 textarea:focus {
-
-    border:
-        1px solid #8b5cf6 !important;
+    border: 1px solid #8b5cf6 !important;
 
     box-shadow:
         0 0 0 2px rgba(139,92,246,0.10),
         0 10px 35px rgba(0,0,0,0.25) !important;
-
 }
 
-/* Buttons */
 .stButton > button {
-
-    border-radius:
-        14px;
-
-    border:
-        1px solid rgba(139,92,246,0.25);
-
-    background:
-        rgba(17,20,34,0.85);
-
-    color:
-        #c9cce0;
-
-    font-family:
-        'Space Grotesk', sans-serif;
-
-    font-weight:
-        600;
-
-    padding:
-        0.72rem 1rem;
-
-    transition:
-        all 0.25s ease;
-
-    box-shadow:
-        0 7px 25px rgba(0,0,0,0.18);
-
+    border-radius: 14px;
+    border: 1px solid rgba(139,92,246,0.25);
+    background: rgba(17,20,34,0.85);
+    color: #c9cce0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    padding: 0.72rem 1rem;
+    transition: all 0.25s ease;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.18);
 }
 
-/* Button hover */
 .stButton > button:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(139,92,246,0.20),
+        rgba(59,130,246,0.12)
+    );
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(139,92,246,0.20),
-            rgba(59,130,246,0.12)
-        );
-
-    border-color:
-        #8b5cf6;
-
-    color:
-        #ffffff;
-
-    transform:
-        translateY(-3px);
-
-    box-shadow:
-        0 12px 30px rgba(100,80,200,0.20);
-
+    border-color: #8b5cf6;
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(100,80,200,0.20);
 }
 
-/* Code output */
 pre {
-
-    background:
-        rgba(10,13,24,0.95) !important;
-
-    border:
-        1px solid rgba(139,92,246,0.16) !important;
-
-    border-radius:
-        14px !important;
-
+    background: rgba(10,13,24,0.95) !important;
+    border: 1px solid rgba(139,92,246,0.16) !important;
+    border-radius: 14px !important;
 }
 
-/* Markdown output */
 .stMarkdown {
-
-    color:
-        #c9cce0;
-
+    color: #c9cce0;
 }
 
-/* Success messages */
 div[data-testid="stAlert"] {
-
-    border-radius:
-        13px;
-
+    border-radius: 13px;
 }
 
-/* Dividers */
 hr {
-
-    border-color:
-        rgba(139,92,246,0.15);
-
+    border-color: rgba(139,92,246,0.15);
 }
 
-/* Footer */
 .footer {
-
-    text-align:
-        center;
-
-    color:
-        #565c73;
-
-    font-size:
-        0.8rem;
-
-    margin-top:
-        2.5rem;
-
+    text-align: center;
+    color: #565c73;
+    font-size: 0.8rem;
+    margin-top: 2.5rem;
 }
 
-/* Decorative corner symbols */
 .corner-decoration {
-
-    text-align:
-        center;
-
-    color:
-        #555b78;
-
-    font-size:
-        0.75rem;
-
-    margin-top:
-        0.8rem;
-
+    text-align: center;
+    color: #555b78;
+    font-size: 0.75rem;
+    margin-top: 0.8rem;
 }
 
 </style>
 """, unsafe_allow_html=True)
+
+
+# =========================
+# GEMINI FUNCTION
+# =========================
+
+def generate_response(prompt):
+    """
+    Sends a prompt to Gemini.
+    Automatically retries temporary server errors.
+    """
+
+    max_retries = 3
+
+    for attempt in range(max_retries):
+
+        try:
+
+            response = client.models.generate_content(
+                model="gemini-3.6-flash",
+                contents=prompt
+            )
+
+            return response.text
+
+        except Exception as error:
+
+            error_text = str(error)
+
+            # Retry temporary Gemini server problems
+            if "503" in error_text or "UNAVAILABLE" in error_text:
+
+                if attempt < max_retries - 1:
+
+                    wait_time = 3 * (2 ** attempt)
+
+                    time.sleep(wait_time)
+
+                else:
+
+                    return (
+                        "### ✦ Gemini is temporarily busy\n\n"
+                        "Google's AI service is experiencing high demand "
+                        "right now.\n\n"
+                        "Please wait a little and try again."
+                    )
+
+            else:
+
+                return (
+                    "### ⚠ Something went wrong\n\n"
+                    f"`{error_text}`"
+                )
 
 
 # =========================
@@ -438,7 +388,9 @@ st.markdown(
 )
 
 
-# Welcome card
+# =========================
+# WELCOME CARD
+# =========================
 
 st.markdown("""
 <div class="welcome-card">
@@ -456,7 +408,9 @@ explain, improve and optimize it.
 """, unsafe_allow_html=True)
 
 
-# Language
+# =========================
+# LANGUAGE
+# =========================
 
 st.markdown(
     '<div class="section-title">⌘  Programming Language</div>',
@@ -470,7 +424,9 @@ language = st.selectbox(
 )
 
 
-# Code
+# =========================
+# CODE INPUT
+# =========================
 
 st.markdown(
     '<div class="section-title">⌦  Your Code</div>',
@@ -507,7 +463,9 @@ st.write("")
 col1, col2, col3 = st.columns(3)
 
 
-# EXPLAIN
+# =========================
+# EXPLAIN CODE
+# =========================
 
 with col1:
 
@@ -517,6 +475,7 @@ with col1:
     ):
 
         if code.strip() == "":
+
             st.warning("Please enter some code.")
 
         else:
@@ -549,19 +508,18 @@ Explain the important functions and variables.
 
             with st.spinner("✦ Understanding your code..."):
 
-                response = client.models.generate_content(
-                    model="gemini-3.6-flash",
-                    contents=prompt
-                )
+                result = generate_response(prompt)
 
             st.success(
                 "Explanation generated ✦"
             )
 
-            st.markdown(response.text)
+            st.markdown(result)
 
 
-# IMPROVE
+# =========================
+# IMPROVE CODE
+# =========================
 
 with col2:
 
@@ -571,6 +529,7 @@ with col2:
     ):
 
         if code.strip() == "":
+
             st.warning("Please enter some code.")
 
         else:
@@ -598,19 +557,18 @@ Then explain the changes you made.
 
             with st.spinner("✦ Improving your code..."):
 
-                response = client.models.generate_content(
-                    model="gemini-3.6-flash",
-                    contents=prompt
-                )
+                result = generate_response(prompt)
 
             st.success(
                 "Improved version generated ✦"
             )
 
-            st.markdown(response.text)
+            st.markdown(result)
 
 
-# OPTIMIZE
+# =========================
+# OPTIMIZE CODE
+# =========================
 
 with col3:
 
@@ -620,6 +578,7 @@ with col3:
     ):
 
         if code.strip() == "":
+
             st.warning("Please enter some code.")
 
         else:
@@ -649,19 +608,18 @@ Give the answer under these headings:
 
             with st.spinner("⚡ Optimizing your code..."):
 
-                response = client.models.generate_content(
-                    model="gemini-3.6-flash",
-                    contents=prompt
-                )
+                result = generate_response(prompt)
 
             st.success(
                 "Optimized version generated ⚡"
             )
 
-            st.markdown(response.text)
+            st.markdown(result)
 
 
-# Footer
+# =========================
+# FOOTER
+# =========================
 
 st.markdown(
     '<div class="corner-decoration">'
